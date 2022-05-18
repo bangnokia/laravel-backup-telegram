@@ -1,0 +1,27 @@
+{
+    "name": "bangnokia/laravel-backup-telegram",
+    "description": "Upload your backup file to telegram channel for spatie/laravel-backup",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "8.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bangnokia\\LaravelBackupTelegram\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nguyen Viet",
+            "email": "bangnokia@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bangnokia\\LaravelBackupTelegram\\ServiceProvider"
+            ]
+        }
+    }
+}

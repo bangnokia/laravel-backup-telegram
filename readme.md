@@ -4,6 +4,11 @@ This package requires [spatie/laravel-backup](https://github.com/spatie/laravel-
 
 ## Setup
 
+Install this package 
+```
+composer require bangnokia/laravel-backup-telegram
+```
+
 Edit your `config/services.php` file, then add these lines. I tried to match config with the package [Telegram notification channel](https://github.com/laravel-notification-channels/telegram)
 ```
 'telegram-bot-api' => [

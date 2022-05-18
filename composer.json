@@ -4,7 +4,9 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "8.*"
+        "php": "8.*",
+        "illuminate/support": "^9.13",
+        "spatie/laravel-backup": "^8.1"
     },
     "autoload": {
         "psr-4": {

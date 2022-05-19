@@ -30,4 +30,4 @@ jobs:
 
       - name: Run test suite
         run: |
-          vendor/bin/pest
+          vendor/bin/phpunit

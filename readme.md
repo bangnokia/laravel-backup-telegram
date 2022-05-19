@@ -2,6 +2,8 @@
 
 This package requires [spatie/laravel-backup](https://github.com/spatie/laravel-backup) to work, it supports for uploading the backup file to a telegram channel.
 
+Because this package use [Telegram API](https://core.telegram.org/bots/api#senddocument), the file size limited to 50MB. So if your database is big, this solution isn't for you.
+
 ## Setup
 
 Install this package 

@@ -8,9 +8,17 @@
         "illuminate/support": "^9.13",
         "spatie/laravel-backup": "^8.1"
     },
+    "require-dev": {
+        "orchestra/testbench": "^7.5"
+    },
     "autoload": {
         "psr-4": {
             "Bangnokia\\LaravelBackupTelegram\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bangnokia\\LaravelBackupTelegram\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -25,5 +33,10 @@
                 "Bangnokia\\LaravelBackupTelegram\\ServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
     }
 }

@@ -8,6 +8,7 @@ use Spatie\Backup\Events\BackupWasSuccessful;
 class BackupToTelegram
 {
     protected string $token;
+
     protected string $chatId;
 
     public function __construct()

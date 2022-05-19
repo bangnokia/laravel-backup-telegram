@@ -28,9 +28,9 @@ class BackupToTelegram
             );
 
         if ($response['ok']) {
-            consoleOutput()->info('Uploaded to telegram successful!');
+            consoleOutput()->info('Uploaded to Telegram successful!');
         } else {
-            consoleOutput()->error('Can not upload to telegram!');
+            consoleOutput()->error('Can not upload to Telegram!');
         }
     }
 }

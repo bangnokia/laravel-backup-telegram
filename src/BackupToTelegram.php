@@ -17,7 +17,7 @@ class BackupToTelegram
         $this->chatId = config('services.telegram-bot-api.chat_id');
     }
 
-    public function handle(BackupWasSuccessful $event): void
+    public function handle(BackupWasSuccessful $event)
     {
         $backup = $event->backupDestination->newestBackup();
 
@@ -27,10 +27,9 @@ class BackupToTelegram
                 ['chat_id' => $this->chatId, 'caption' => config('app.name')]
             );
 
-        if ($response['ok']) {
-            consoleOutput()->info('Uploaded to Telegram successful!');
-        } else {
-            consoleOutput()->error('Can not upload to Telegram!');
-        }
+
+        return $response['ok']
+            ? consoleOutput()->info('Uploaded to Telegram successful!')
+            : consoleOutput()->error('Can not upload to Telegram');
     }
 }

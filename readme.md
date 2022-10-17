@@ -2,7 +2,7 @@
 
 This package requires [spatie/laravel-backup](https://github.com/spatie/laravel-backup) to work, it supports for uploading the backup file to a telegram channel.
 
-Because this package use [Telegram API](https://core.telegram.org/bots/api#senddocument), the file size be limited to 50MB. So if your database is big, this solution isn't for your bussiness.
+Because this package use [Telegram API](https://core.telegram.org/bots/api#senddocument), the file size must be limited to 50MB. So if your database is big, this solution isn't for your bussiness.
 
 ## Setup
 
@@ -18,3 +18,7 @@ Edit your `config/services.php` file, then add these lines. I tried to match con
     'chat_id' => env('TELEGRAM_CHAT_ID')
 ]
 ```
+
+## Usage
+
+This package automatically add a event listener when a backup created successfully. So you just simply run `php artisan backup:run`, your backup file will be uploaded to Telegram channel.

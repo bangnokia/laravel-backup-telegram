@@ -11,7 +11,7 @@ class BackupToTelegram
 
     protected string $chatId;
 
-    public function __construct(?string $token, ?string $chatId)
+    public function __construct(?string $token = null, ?string $chatId = null)
     {
         $this->token = $token ?? config('services.telegram-bot-api.token');
         $this->chatId = $chatId ?? config('services.telegram-bot-api.chat_id');

@@ -22,3 +22,5 @@ Edit your `config/services.php` file, then add these lines. I tried to match con
 ## Usage
 
 This package automatically add a event listener when a backup created successfully. So you just simply run `php artisan backup:run`, your backup file will be uploaded to Telegram channel.
+
+If you don't use the email notitication, please backup the `backup.php` config file and change `mail.to` to an empty string. Refer to this issue [#1](https://github.com/bangnokia/laravel-backup-telegram/issues/1)

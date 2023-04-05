@@ -14,6 +14,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function boot()
     {
-        Event::listen(BackupWasSuccessful::class, BackupToTelegram::class);
+        Event::listen(BackupWasSuccessful::class, Transporter::class);
     }
 }

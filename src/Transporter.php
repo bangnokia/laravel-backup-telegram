@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Spatie\Backup\BackupDestination\Backup;
 use Spatie\Backup\Events\BackupWasSuccessful;
 
-class BackupToTelegram
+class Transporter
 {
     protected string $token;
 

@@ -21,4 +21,11 @@ class Sword
 
         return $parts;
     }
+
+    public function cleanup(array $parts): void
+    {
+        foreach ($parts as $part) {
+            unlink($part);
+        }
+    }
 }

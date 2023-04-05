@@ -67,9 +67,7 @@ class BackupToTelegram
         }
 
         // delete the parts
-        foreach ($parts as $part) {
-            unlink($part);
-        }
+        $sword->cleanup($parts);
 
         return $response->json(); // return the last response
     }

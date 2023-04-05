@@ -41,6 +41,7 @@ class BackupToTelegram
     public function singleUpload(Backup $backup): array
     {
         $response = Http::attach('document', $backup->disk()->get($backup->path()), $backup->path())
+            ->timeout(120)
             ->post(
                 "https://api.telegram.org/bot{$this->token}/sendDocument",
                 ['chat_id' => $this->chatId, 'caption' => config('app.name')]

@@ -18,20 +18,24 @@ class BackupToTelegram
         $this->chatId = $chatId ?? config('services.telegram-bot-api.chat_id');
     }
 
-    public function handle(BackupWasSuccessful $event)
+    public function handle(BackupWasSuccessful $event): void
     {
         $backup = $event->backupDestination->newestBackup();
 
-        // if file size bigger than 50MB, chunk the files into multiple parts
-        if ($backup->sizeInBytes() > 50 * 1024 * 1024) {
-            $response = $this->splitAndUpload($backup, 50);
+        $threshold = 50; // in MB
+        consoleOutput()->info("File size is {$backup->sizeInBytes()} bytes");
+        if ($backup->sizeInBytes() > $threshold * 1024 * 1024) {
+            consoleOutput()->info("File size is bigger than {$threshold}MB, chunking the file into multiple parts");
+            $response = $this->splitAndUpload($backup, $threshold);
         } else {
             $response = $this->singleUpload($backup);
         }
 
-        return $response['ok']
-            ? consoleOutput()->info('Uploaded to Telegram successful!')
-            : consoleOutput()->error('Can not upload to Telegram');
+        if ($response['ok']) {
+            consoleOutput()->info('Uploaded to Telegram successful!');
+        } else {
+            consoleOutput()->error('Can not upload to Telegram');
+        }
     }
 
     public function singleUpload(Backup $backup): array
@@ -45,14 +49,15 @@ class BackupToTelegram
         return $response->json();
     }
 
-    public function splitAndUpload(?Backup $backup): array
+    public function splitAndUpload(?Backup $backup, int $threshold): array
     {
         $sword = new Sword();
-        // chunk the file into 50MB parts
-        $parts = $sword->slash($backup->disk()->path($backup->path()));
+
+        $parts = $sword->slash($backup->disk()->path($backup->path()), $threshold);
 
         foreach ($parts as $part) {
-            $response = Http::attach('document', $part, basename($part))
+            consoleOutput()->info("Uploading part {$part}");
+            $response = Http::attach('document', file_get_contents($part), basename($part))
                 ->post(
                     "https://api.telegram.org/bot{$this->token}/sendDocument",
                     ['chat_id' => $this->chatId, 'caption' => config('app.name')]

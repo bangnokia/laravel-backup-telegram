@@ -22,7 +22,7 @@ class BackupToTelegram
     {
         $backup = $event->backupDestination->newestBackup();
 
-        $threshold = 49; // in MB
+        $threshold = 40; // in MB
         consoleOutput()->info("File size is {$backup->sizeInBytes()} bytes");
         if ($backup->sizeInBytes() > $threshold * 1024 * 1024) {
             consoleOutput()->info("File size is bigger than {$threshold}MB, chunking the file into multiple parts");
@@ -41,7 +41,7 @@ class BackupToTelegram
     public function singleUpload(Backup $backup): array
     {
         $response = Http::attach('document', $backup->disk()->get($backup->path()), $backup->path())
-            ->timeout(120)
+            ->timeout(300)
             ->post(
                 "https://api.telegram.org/bot{$this->token}/sendDocument",
                 ['chat_id' => $this->chatId, 'caption' => config('app.name')]
@@ -59,6 +59,7 @@ class BackupToTelegram
         foreach ($parts as $part) {
             consoleOutput()->info("Uploading part {$part}");
             $response = Http::attach('document', file_get_contents($part), basename($part))
+                ->timeout(300) // is this enough?
                 ->post(
                     "https://api.telegram.org/bot{$this->token}/sendDocument",
                     ['chat_id' => $this->chatId, 'caption' => config('app.name')]

@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 
 class Sword
 {
-    public function slash(string $fullPath, int $megaBytes = 50): array
+    public function slash(string $fullPath, int $megaBytes = 49): array
     {
         $process = Process::fromShellCommandline("split -b {$megaBytes}M {$fullPath} {$fullPath}.part");
         $result = $process->run();

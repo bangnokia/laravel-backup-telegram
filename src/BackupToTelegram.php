@@ -22,7 +22,7 @@ class BackupToTelegram
     {
         $backup = $event->backupDestination->newestBackup();
 
-        $threshold = 50; // in MB
+        $threshold = 49; // in MB
         consoleOutput()->info("File size is {$backup->sizeInBytes()} bytes");
         if ($backup->sizeInBytes() > $threshold * 1024 * 1024) {
             consoleOutput()->info("File size is bigger than {$threshold}MB, chunking the file into multiple parts");

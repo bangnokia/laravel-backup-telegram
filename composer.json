@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": "8.*",
-        "illuminate/support": "^9.13|^8",
+        "illuminate/support": "^8|^9|^10",
         "spatie/laravel-backup": "^8.1"
     },
     "require-dev": {

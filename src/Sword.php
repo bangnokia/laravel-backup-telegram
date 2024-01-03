@@ -2,22 +2,21 @@
 
 namespace Bangnokia\LaravelBackupTelegram;
 
-use Spatie\Backup\BackupDestination\Backup;
 use Symfony\Component\Process\Process;
 
 class Sword
 {
-    public function slash(string $fullPath, int $megaBytes = 49): array
+    public function slash(string $filePath, int $megaBytes = 49): array
     {
-        $process = Process::fromShellCommandline("split -b {$megaBytes}M {$fullPath} {$fullPath}.part");
+        $process = Process::fromShellCommandline("split -b {$megaBytes}M {$filePath} {$filePath}.part");
         $result = $process->run();
 
         if ($result !== 0) {
-            throw new \Exception('Can not split the file');
+            throw new \RuntimeException('Can not split the file');
         }
 
         // get the list of parts
-        $parts = glob("{$fullPath}.part*");
+        $parts = glob("{$filePath}.part*");
 
         return $parts;
     }

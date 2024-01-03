@@ -2,6 +2,7 @@
 
 namespace Bangnokia\LaravelBackupTelegram;
 
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Spatie\Backup\BackupDestination\Backup;
 use Spatie\Backup\Events\BackupWasSuccessful;
@@ -50,6 +51,9 @@ class Transporter
         return $response->json();
     }
 
+    /**
+     * @throws RequestException
+     */
     public function splitAndUpload(?Backup $backup, int $threshold): array
     {
         $sword = new Sword();

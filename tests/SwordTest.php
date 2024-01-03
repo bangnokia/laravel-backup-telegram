@@ -23,6 +23,7 @@ class SwordTest extends TestCase
         parent::tearDown();
 
         $parts = glob(__DIR__ . '/dummy/test.zip.part*');
+
         foreach ($parts as $part) {
             unlink($part);
         }

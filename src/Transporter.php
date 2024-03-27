@@ -62,12 +62,16 @@ class Transporter
 
         foreach ($parts as $part) {
             consoleOutput()->info("Uploading part {$part}");
-            $response = Http::attach('document', file_get_contents($part), basename($part))
+            $stream = fopen($part, 'r');
+
+            $response = Http::attach('document', $stream, basename($part))
                 ->timeout(300) // is this enough?
                 ->post(
                     "https://api.telegram.org/bot{$this->token}/sendDocument",
                     ['chat_id' => $this->chatId, 'caption' => config('app.name')]
                 )->throw();
+
+            fclose($stream);
         }
 
         // delete the parts

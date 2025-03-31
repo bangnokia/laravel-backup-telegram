@@ -15,7 +15,9 @@ jobs:
         php: [8.0, 8.1, 8.2, 8.3]
         laravel: [9.*, 10.*, 11.*, 12.*]
         exclude:
-          # PHP 8.0 is not compatible with Laravel 11/12
+          # PHP 8.0 is not compatible with Laravel 10/11/12
+          - php: 8.0
+            laravel: 10.*
           - php: 8.0
             laravel: 11.*
           - php: 8.0

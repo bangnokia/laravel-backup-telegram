@@ -7,7 +7,7 @@ If the file size is bigger than 50MB, the package will split the file into multi
 
 ## Compatibility
 
-This package supports Laravel 8, 9, 10, 11 and 12.
+This package supports Laravel 9, 10, 11 and 12.
 
 ## Setup
 

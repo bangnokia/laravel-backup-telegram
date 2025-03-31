@@ -1,39 +1,44 @@
-name: Run test
+name: Tests
 
 on:
   push:
-    branches:
-      - main
-
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  tests:
+  test:
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: true
       matrix:
-        php: [ 8.1, 8.2 ]
+        php: [ 8.1, 8.2, 8.3, 8.4]
+        laravel: [8.*, 9.*, 10.*, 11.*, 12.*]
+        exclude:
+          - php: 8.0
+            laravel: 11.*
+          - php: 8.0
+            laravel: 12.*
+          - php: 8.1
+            laravel: 12.*
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, mbstring, zip, pcntl, pdo, iconv
+          extensions: dom, curl, libxml, mbstring, zip
           coverage: none
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
-
-      - name: Run test suite
         run: |
-          vendor/bin/phpunit
+          composer require "illuminate/support:${{ matrix.laravel }}" --no-interaction --no-update
+          composer update --prefer-dist --no-interaction
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
